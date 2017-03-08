@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+</head>
+<body>
+
+<p>
+    <button id="subscribe-raw-events">Subscribe</button><br />
+    Raw events: <ul id="raw-events"></ul>
+</p>
+
+<p>
+    <button id="subscribe-raw-events-city">Subscribe</button><br />
+    Raw events: <ul id="raw-events-city"></ul>
+</p>
+<script>
+    function addEvent(evnt, elem, func) {
+        if (elem.addEventListener)  // W3C DOM
+            elem.addEventListener(evnt,func,false);
+        else if (elem.attachEvent) { // IE DOM
+            elem.attachEvent("on"+evnt, func);
+        }
+        else {
+            elem[evnt] = func;
+        }
+    }
+
+
+    addEvent("click", document.getElementById('subscribe-raw-events'), function() {
+        var rawEvents = document.getElementById("raw-events");
+        var rawEventSource = new EventSource("/members");
+        rawEventSource.onmessage = function(e) {
+            var newElement = document.createElement("li");
+            newElement.innerHTML = "Member: <br\>" + e.data;
+            rawEvents.appendChild(newElement);
+        }
+    });
+
+    addEvent("click", document.getElementById('subscribe-raw-events-city'), function() {
+        var rawEvents = document.getElementById("raw-events-city");
+        var rawEventSource = new EventSource("/members/Milano");
+        rawEventSource.onmessage = function(e) {
+            var newElement = document.createElement("li");
+            newElement.innerHTML = "Member: <br\>" + e.data;
+            rawEvents.appendChild(newElement);
+        }
+    });
+
+</script>
+</body>
+</html>

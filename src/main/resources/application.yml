@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: profiles
+  jmx:
+    enabled: true
+  jackson:
+    serialization:
+      INDENT_OUTPUT: true
+      WRITE_ENUMS_USING_TO_STRING: true
+      ORDER_MAP_ENTRIES_BY_KEYS: true
+    deserialization:
+      ACCEPT_SINGLE_VALUE_AS_ARRAY: true
+    mapper:
+      USE_WRAPPER_NAME_AS_PROPERTY_NAME: true
+  data:
+    mongodb:
+      database: profile
+      host: localhost
+#  webflux:
+#    static-path-pattern: /resources/**
+#  resources:
+#    chain:
+#      strategy:
+#        content:
+#          enabled: true
+#          paths: /**
+#      field-naming-strategy:
+endpoints:
+  enabled: true
+logging:
+  level:
+    com.incalza: DEBUG
+    org.springframework: INFO
+    org.springframework.web: DEBUG
+    org.springframework.data: DEBUG
+    org.springframework.web.reactive: DEBUG
+    org.springframework.boot.autoconfigure.mongo.embedded.EmbeddedMongo: DEBUG
+    root: INFO
